@@ -25,3 +25,5 @@ models:
   - name: stg_dvdrental_customers 
   - name: stg_dvdrental_rentals 
   - name: stg_dvdrental_payments
+  - name: stg_dvdrental_films
+  - name: stg_dvdrental_inventories
