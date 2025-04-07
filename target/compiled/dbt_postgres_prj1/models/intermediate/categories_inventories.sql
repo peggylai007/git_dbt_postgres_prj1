@@ -1,19 +1,19 @@
 with films as (
 
-    select * from {{ ref('stg_dvdrental_films') }}
+    select * from "dvdrental"."public"."stg_dvdrental_films"
 
 ),
 
 inventories as (
 
-    select * from {{ ref('stg_dvdrental_inventories') }}
+    select * from "dvdrental"."public"."stg_dvdrental_inventories"
 
 ),
 
 inventories_filmid as (
 
     select
-        film_id as film_id,
+        film_id,
         count(*) as filmid_count
 
     from inventories
@@ -22,12 +22,12 @@ inventories_filmid as (
 
 ),
 
-inventories_filmid_categories as (
+inventories_filmid_ratings as (
 
    select 
       inventories_filmid.film_id.
       inventories_filmid.filmid_count,
-      films.catetory
+      films.rating
 
     from inventories_filmid
 
@@ -39,10 +39,10 @@ inventories_filmid_categories as (
 
 final as (
 
-  select films.category
-         sum(film_id_count)
-  from inventories_filmid_categories 
-  group by films.category
+  select rating,
+         sum(filmid_count) as total_filmid_count
+  from inventories_filmid_ratings 
+  group by rating
 )
 
 select * from final
